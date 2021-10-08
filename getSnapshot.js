@@ -62,7 +62,6 @@ const owners = async () => {
    data = data.replace(/[^a-zA-Z0-9]/g, " ").trim().replace(/[\s,]+/g,',').split(",")
 
   for (let i = 0; i <= data.length-1; i++) {
-    //console.log(data[i])
     newList.push({ mint: data[i], holder: await getNftOwner(data[i]) });
     fs.writeFileSync(outputFile, JSON.stringify(newList));
   }
