@@ -34,17 +34,27 @@ const getNftOwner = async (address) => {
       dataSize: 165,
     };
     let getFilter = [filter, filter2];
-    let programAccountsConfig = { filters: getFilter };
-    let _listOfTokens = await connection.getProgramAccounts(
+    let programAccountsConfig = { filters: getFilter, encoding: "jsonParsed" };
+    let _listOfTokens = await connection.getParsedProgramAccounts(
       TOKEN_PUBKEY,
       programAccountsConfig
     );
 
-    let _mint = new web3.PublicKey(
-      _listOfTokens[0]["account"]["data"].slice(32, 64)
-    );
-    let res = _mint.toBase58();
-    console.log(res);
+    let res;
+    for (let i = 0; i < _listOfTokens.length; i++) {
+      if (
+        _listOfTokens[i]["account"]["data"]["parsed"]["info"]["tokenAmount"][
+          "amount"
+        ] == 1
+      ) {
+        res = _listOfTokens[i]["account"]["data"]["parsed"]["info"]["owner"];
+        console.log(_listOfTokens[i]["account"]["data"]["parsed"]["info"]["owner"]);
+        console.log(
+          _listOfTokens[i]["account"]["data"]["parsed"]["info"]["tokenAmount"][
+            "amount"
+          ]);
+      }
+    }
 
     return res;
   } catch (e) {
@@ -60,9 +70,8 @@ const owners = async () => {
     console.log("OK: " + inputFile);     
   });
    data = data.replace(/[^a-zA-Z0-9]/g, " ").trim().replace(/[\s,]+/g,',').split(",")
-
+console.log(data)
   for (let i = 0; i <= data.length-1; i++) {
-    //console.log(data[i])
     newList.push({ mint: data[i], holder: await getNftOwner(data[i]) });
     fs.writeFileSync(outputFile, JSON.stringify(newList));
   }
