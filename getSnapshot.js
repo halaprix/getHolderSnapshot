@@ -73,8 +73,8 @@ const owners = async () => {
 console.log(data)
   for (let i = 0; i <= data.length-1; i++) {
     newList.push({ mint: data[i], holder: await getNftOwner(data[i]) });
-    fs.writeFileSync(outputFile, JSON.stringify(newList));
   }
+  fs.writeFileSync(outputFile, JSON.stringify(newList));
 };
 
 owners();
