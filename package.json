@@ -1,15 +1,60 @@
 {
-  "name": "getsnapshot",
-  "version": "1.0.0",
-  "description": "get snapshot of solana nft holders",
-  "main": "getSnapshot.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "name": "get-snapshot",
+  "version": "2.0.0",
+  "description": "Snapshot Solana NFT holders from a list of mint addresses — concurrent, resilient, BYO-RPC.",
+  "type": "module",
+  "main": "./src/snapshot.js",
+  "bin": {
+    "get-snapshot": "./bin/get-snapshot.js"
   },
+  "exports": {
+    ".": "./src/snapshot.js",
+    "./rpc": "./src/rpc.js",
+    "./io": "./src/io.js"
+  },
+  "files": [
+    "bin",
+    "src",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "start": "node ./bin/get-snapshot.js",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "node --test \"test/**/*.test.js\""
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": [
+    "solana",
+    "nft",
+    "holder",
+    "snapshot",
+    "cli",
+    "spl-token",
+    "airdrop"
+  ],
   "author": "halaprix",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/halaprix/getHolderSnapshot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/halaprix/getHolderSnapshot/issues"
+  },
+  "homepage": "https://github.com/halaprix/getHolderSnapshot#readme",
   "dependencies": {
-    "@project-serum/anchor": "^0.17.1-beta.1",
-    "@solana/web3.js": "^1.29.2"
+    "@solana/web3.js": "^1.95.4",
+    "commander": "^12.1.0",
+    "kleur": "^4.1.5",
+    "ora": "^8.1.1",
+    "p-limit": "^6.1.0",
+    "p-retry": "^6.2.1"
+  },
+  "devDependencies": {
+    "prettier": "^3.3.3"
   }
 }
