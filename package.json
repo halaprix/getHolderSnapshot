@@ -22,7 +22,7 @@
     "start": "node ./bin/get-snapshot.js",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "test": "node --test \"test/**/*.test.js\""
+    "test": "node --test"
   },
   "engines": {
     "node": ">=20"
